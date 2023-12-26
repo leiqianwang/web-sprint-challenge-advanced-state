@@ -1,14 +1,28 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import * as actionCreators from '../state/action-creators'
+import React from 'react';
+import { connect } from 'react-redux';
+// import * as actionCreators from '../state/action-creators'
+import { inputChange, postQuiz, resetForm } from '../state/action-creators';
+// import {form} from '../state/reducers';
+
+// const initialFormState = {
+//   newQuestion: '',
+//   newTrueAnswer: '',
+//   newFalseAnswer: '',
+// }
+
 
 export function Form(props) {
+       const{inputChange, postQuiz, resetForm, form} = props;
 
   const onChange = evt => {
-
+        const {id, value} = evt.target;
+    inputChange(id, value);
   }
 
   const onSubmit = evt => {
+        evt.preventDefault();
+        postQuiz(form);
+        resetForm();
 
   }
 
@@ -23,4 +37,9 @@ export function Form(props) {
   )
 }
 
-export default connect(st => st, actionCreators)(Form)
+const mapStateToProps = state => ({
+  form: state.form // Assuming form state has the structure { newQuestion, newTrueAnswer, newFalseAnswer }
+});
+
+
+export default connect(mapStateToProps, { inputChange, postQuiz, resetForm })(Form);
