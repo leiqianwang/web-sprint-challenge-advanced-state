@@ -5,15 +5,19 @@ import { INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_INFO_MESSAGE, 
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
-    case MOVE_CLOCKWISE:
-      return (state + 1) % 6; // Assuming there are 6 cogs
-    case MOVE_COUNTERCLOCKWISE:
-      return (state - 1 + 6) % 6; // To avoid negative values
-    default:
-      return state;
+   
+      case MOVE_CLOCKWISE:
+        // If the current position is the last cog (5), wrap around to the first cog (0)
+        return state === 5 ? 0 : state + 1;
+  
+      case MOVE_COUNTERCLOCKWISE:
+        // If the current position is the first cog (0), wrap around to the last cog (5)
+        return state === 0 ? 5 : state - 1;
+  
+      default:
+        return state;
+    }
   }
-
-}
 
 const initialQuizState = null
 function quiz(state = initialQuizState, action) {
@@ -26,15 +30,18 @@ function quiz(state = initialQuizState, action) {
 
 }
 
-const initialSelectedAnswerState = null
+const initialSelectedAnswerState = {}
 function selectedAnswer(state = initialSelectedAnswerState, action) {
     switch(action.type) {
        case SET_SELECTED_ANSWER:
-        return action.payload; // payload will be answerId which is passed in the handleAnswerClick() in Quiz.js
-        default:
-          return(state);
+         // Assuming action.payload is structured as { quiz_id, answer_id }
+      //const { answer_id } = action.payload;
+      return action.payload;
+      default:
+        return state;
     }
-}
+  }
+
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {

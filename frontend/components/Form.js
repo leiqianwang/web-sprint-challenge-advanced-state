@@ -21,7 +21,9 @@ export function Form(props) {
 
   const onSubmit = evt => {
         evt.preventDefault();
-        postQuiz(form);
+        const { newQuestion, newTrueAnswer, newFalseAnswer } = form;
+           postQuiz(newQuestion, newTrueAnswer, newFalseAnswer);
+        //postQuiz(form);
         resetForm();
 
   }

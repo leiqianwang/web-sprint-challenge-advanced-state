@@ -61,36 +61,55 @@ export function fetchQuiz() {
   }
 }
 
-export function postAnswer(answer_id) {
+export function postAnswer({ quiz_id, answer_id }) {
   return function (dispatch) {
-    // On successful POST:
-    // - Dispatch an action to reset the selected answer state
-    dispatch(selectAnswer(null));
-    // - Dispatch an action to set the server message to state
-   
-    axios.post('http://localhost:9000/api/quiz/answer', { answer_id: selectedAnswer, quiz_id: quiz.id })
-    .then(res => {
-      dispatch(selectAnswer(res.data));
-      const message = res.data.isCorrect
-      ? 'Nice job! That was the correct answer'
-      : 'What a shame! That was the incorrect answer';
-    setMessage(message);
-  })
-    
-    dispatch(fetchQuiz());
-    // - Dispatch the fetching of the next quiz, (assuming fetchQuiz is another action creator)
-      
-    // .finally(res => {
-    //   res.dispatch({type: SET_QUIZ_INTO_STATE, payload: setQuiz(quizData)});
-    // })
+    axios.post('http://localhost:9000/api/quiz/answer', { quiz_id, answer_id })
+      .then(res => {
+        dispatch(selectAnswer(null))
+        dispatch(setMessage(res.data.message))
+      })
+      .catch(err => {
+        const errToDisplay = err.response ? err.response.data.message : err.message
+        dispatch(setMessage(errToDisplay))
+      })
+      .finally(() => {
+        dispatch(fetchQuiz())
+      })
   }
 }
 
-export function postQuiz(quizData) {
+// export function postAnswer({quiz_id, answer_id}) {
+//   return function (dispatch) {
+//     // On successful POST:
+//     // - Dispatch an action to reset the selected answer state
+//     //dispatch(selectAnswer(null));
+//     // - Dispatch an action to set the server message to state
+//         console.log(quiz_id, answer_id);
+//     axios.post('http://localhost:9000/api/quiz/answer', { quiz_id, answer_id })
+//     .then(res => {
+//       //const feedbackMessage = res.data.isCorrect ? 'Nice job! That was the correct answer' : 'What a shame! That was the incorrect answer';
+//       //dispatch(setMessage(res.data.message));
+//       dispatch(selectAnswer(null)); 
+//     })
+    
+//    .catch(err => {
+//     console.log(err);
+//     const errorMessage = err.response ? err.response.data.message : err.message;
+//     dispatch(setMessage(errorMessage));
+//    })
+   
+//     .finally(() => {
+//          dispatch(fetchQuiz());
+//       });
+//   }
+// }
+
+export function postQuiz(question_text, true_answer_text, false_answer_text) {
   return function (dispatch) {
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
-    axios.post('http://localhost:9000/api/quiz/new', quizData)
+    console.log('post form');
+    axios.post('http://localhost:9000/api/quiz/new', {question_text, true_answer_text, false_answer_text})
     .then(res => {
       // Assuming the server response includes a property to indicate if the answer was correct
       const message = res.data.message || 'Quiz submitted successfully!';

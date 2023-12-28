@@ -18,7 +18,11 @@ const Wheel = (props)  => {
     <div id="wrapper">
     <div id="wheel">
       {[...Array(6)].map((_, i) => (
-        <div key={i} className={`cog ${wheelPosition === i ? 'active' : ''}`} style={{ '--i': i }}>
+        <div
+         key={i} 
+        className={`cog ${wheelPosition === i ? 'active' : ''}`} 
+        style={{ '--i': i }
+        }>
           {wheelPosition === i ? 'B' : ''}
         </div>
       ))}
