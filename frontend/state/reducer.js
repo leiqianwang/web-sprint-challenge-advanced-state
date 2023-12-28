@@ -30,7 +30,7 @@ function quiz(state = initialQuizState, action) {
 
 }
 
-const initialSelectedAnswerState = {}
+const initialSelectedAnswerState = {};
 function selectedAnswer(state = initialSelectedAnswerState, action) {
     switch(action.type) {
        case SET_SELECTED_ANSWER:
@@ -47,10 +47,7 @@ const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
        switch(action.type) {
           case SET_INFO_MESSAGE:
-            return {
-            ...state,
-            [action.payload.name]: action.payload.value
-          };
+            return action.payload;
         default:
           return state;
       }
