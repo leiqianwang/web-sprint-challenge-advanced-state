@@ -65,7 +65,7 @@ export function postAnswer({ quiz_id, answer_id }) {
   return function (dispatch) {
     axios.post('http://localhost:9000/api/quiz/answer', { quiz_id, answer_id })
       .then(res => {
-        dispatch(selectAnswer(null))
+        dispatch(selectAnswer({}))
         dispatch(setMessage(res.data.message))
       })
       .catch(err => {
@@ -104,15 +104,16 @@ export function postAnswer({ quiz_id, answer_id }) {
 //   }
 // }
 
-export function postQuiz(question_text, true_answer_text, false_answer_text) {
+export function postQuiz({question_text, true_answer_text, false_answer_text}) {
   return function (dispatch) {
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     console.log('post form');
     axios.post('http://localhost:9000/api/quiz/new', {question_text, true_answer_text, false_answer_text})
     .then(res => {
-      // Assuming the server response includes a property to indicate if the answer was correct
-      const message = res.data.message || 'Quiz submitted successfully!';
+      
+      const message = res.data.message 
+      //|| 'Quiz submitted successfully!';
       dispatch(setMessage(message));
       
       // Reset the form

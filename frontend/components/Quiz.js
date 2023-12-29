@@ -24,14 +24,14 @@ const Quiz = (props) => {
     selectAnswer({ quiz_id: quiz.quiz_id, answer_id: newSelectedAnswer });
   };
 
-  const handleAnswerClick = () => {
-    if (quiz) {
-      const answerId = selectedAnswer.answer_id;
-      if (answerId) {
-        postAnswer({quiz_id: quiz.quiz_id, answer_id: answerId});
-      }
-    }
-  };
+  // const handleAnswerClick = () => {
+  //   if (quiz) {
+  //     const answerId = selectedAnswer.answer_id;
+  //     if (answerId) {
+  //       postAnswer({quiz_id: quiz.quiz_id, answer_id: answerId});
+  //     }
+  //   }
+  // };
  
 
   return (
@@ -53,7 +53,7 @@ const Quiz = (props) => {
             </button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <button id="submitAnswerBtn" onClick={() => postAnswer({ quiz_id: quiz.quiz_id, answer_id: selectedAnswer })}>Submit answer</button>
+            <button disabled={selectedAnswer.quiz_id ? false : true } id="submitAnswerBtn"  onClick={() => postAnswer(selectedAnswer)}>Submit answer</button>
 
           </div>
         </>

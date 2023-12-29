@@ -15,9 +15,24 @@ const Wheel = (props)  => {
   };
 
   return (
-    <div id="wrapper">
-    <div id="wheel">
-      {[...Array(6)].map((_, i) => (
+		<div id="wrapper">
+      <div id="wheel">
+        <div className={wheelPosition === 0 ? 'cog active' : 'cog'} style={{ "--i": 0 }}>{wheelPosition === 0 ? 'B' : ''}</div>
+        <div className={wheelPosition === 1 ? 'cog active' : 'cog'} style={{ "--i": 1 }}>{wheelPosition === 1 ? 'B' : ''}</div>
+        <div className={wheelPosition === 2 ? 'cog active' : 'cog'} style={{ "--i": 2 }}>{wheelPosition === 2 ? 'B' : ''}</div>
+        <div className={wheelPosition === 3 ? 'cog active' : 'cog'} style={{ "--i": 3 }}>{wheelPosition === 3 ? 'B' : ''}</div>
+        <div className={wheelPosition === 4 ? 'cog active' : 'cog'} style={{ "--i": 4 }}>{wheelPosition === 4 ? 'B' : ''}</div>
+        <div className={wheelPosition === 5 ? 'cog active' : 'cog'} style={{ "--i": 5 }}>{wheelPosition === 5 ? 'B' : ''}</div>{/* --i is a custom CSS property, no need to touch that nor the style object */}
+      </div>
+      <div id="keypad">
+        <button id="counterClockwiseBtn" onClick={() => moveCounterClockwise()}>Counter clockwise</button>
+        <button id="clockwiseBtn" onClick={() => moveClockwise()}>Clockwise</button>
+      </div>
+    </div>
+	);
+     {/* --i is a custom CSS property, no need to touch that nor the style object */}
+      };
+      {/* {[...Array(6)].map((_, i) => (
         <div
          key={i} 
         className={`cog ${wheelPosition === i ? 'active' : ''}`} 
@@ -26,23 +41,10 @@ const Wheel = (props)  => {
           {wheelPosition === i ? 'B' : ''}
         </div>
       ))}
-    </div>
-    <div id="keypad">
-      <button onClick={handleMoveCounterClockwise}>Counter clockwise</button>
-      <button onClick={handleMoveClockwise}>Clockwise</button>
-    </div>
-  </div>
-);
+    </div> */}
+   {/* --i is a custom CSS property, no need to touch that nor the style object */}
 
         
-        // /* <div className="cog active" style={{ "--i": 0 }}>B</div>
-        // <div className="cog" style={{ "--i": 1 }}></div>
-        // <div className="cog" style={{ "--i": 2 }}></div>
-        // <div className="cog" style={{ "--i": 3 }}></div>
-        // <div className="cog" style={{ "--i": 4 }}></div>
-        // <div className="cog" style={{ "--i": 5 }}></div>--i is a custom CSS property, no need to touch that nor the style object */
-   
-      };
 
   const mapStateToProps = state => {
     return {
